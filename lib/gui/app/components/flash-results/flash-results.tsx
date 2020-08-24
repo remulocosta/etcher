@@ -16,6 +16,7 @@
 
 import CircleSvg from '@fortawesome/fontawesome-free/svgs/solid/circle.svg';
 import CheckCircleSvg from '@fortawesome/fontawesome-free/svgs/solid/check-circle.svg';
+import TimesCircleSvg from '@fortawesome/fontawesome-free/svgs/solid/times-circle.svg';
 import * as _ from 'lodash';
 import outdent from 'outdent';
 import * as React from 'react';
@@ -112,12 +113,14 @@ const columns: Array<TableColumn<FlashError>> = [
 ];
 
 export function FlashResults({
+	goToMain,
 	image = '',
 	errors,
 	results,
 	skip,
 	...props
 }: {
+	goToMain: () => void;
 	image?: string;
 	errors: FlashError[];
 	skip: boolean;
