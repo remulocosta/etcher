@@ -20,7 +20,7 @@ import TimesCircleSvg from '@fortawesome/fontawesome-free/svgs/solid/times-circl
 import * as _ from 'lodash';
 import outdent from 'outdent';
 import * as React from 'react';
-import { Flex, FlexProps, Link, Table, TableColumn, Txt } from 'rendition';
+import { Flex, FlexProps, Link, TableColumn, Txt } from 'rendition';
 import styled from 'styled-components';
 
 import { progress } from '../../../../shared/messages';
@@ -31,34 +31,24 @@ import { getDrives } from '../../models/available-drives';
 import { resetState } from '../../models/flash-state';
 import * as selection from '../../models/selection-state';
 import { middleEllipsis } from '../../utils/middle-ellipsis';
-import { Modal } from '../../styled-components';
+import { Modal, Table } from '../../styled-components';
 
-const ErrorsTable = styled(({ refFn, ...props }) => {
-	return (
-		<div>
-			<Table<FlashError> ref={refFn} {...props} />
-		</div>
-	);
-})`
-	[data-display='table-head'] [data-display='table-cell'] {
-		width: 50%;
-		position: sticky;
-		top: 0;
-		background-color: ${(props) => props.theme.colors.quartenary.light};
-	}
+const ErrorsTable = styled((props) => <Table<FlashError> {...props} />)`
+	[data-display='table-head'],
+	[data-display='table-body'] {
+		[data-display='table-cell'] {
+			&:first-child {
+				width: 30%;
+			}
 
-	[data-display='table-cell']:first-child {
-		padding-left: 15px;
-	}
+			&:nth-child(2) {
+				width: 20%;
+			}
 
-	[data-display='table-cell']:last-child {
-		width: 150px;
-	}
-
-	&& [data-display='table-row'] > [data-display='table-cell'] {
-		padding: 6px 8px;
-		color: #2a506f;
-	}
+			&:last-child {
+				width: 50%;
+			}
+		}
 `;
 const DoneIcon = (props: {
 	skipped: boolean;
@@ -107,7 +97,7 @@ const columns: Array<TableColumn<FlashError>> = [
 		field: 'message',
 		label: 'Error',
 		render: (message: string, { code }: FlashError) => {
-			return message ? message : code;
+			return message ?? code;
 		},
 	},
 ];
@@ -160,7 +150,7 @@ export function FlashResults({
 						allFailed={allFailed}
 						color={allFailed || someFailed ? '#c6c8c9' : '#1ac135'}
 					/>
-					<Txt>{middleEllipsis(image, 16)}</Txt>
+					<Txt>{middleEllipsis(image, 24)}</Txt>
 				</Flex>
 				<Txt fontSize={24} color="#fff" mb="17px">
 					Flash Complete!
